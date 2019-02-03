@@ -1,0 +1,307 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ander
+ * Date: 03/02/2019
+ * Time: 12:40
+ */
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JOGO DA VELLHA I.E. VENCER </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<script language="LiveScript">
+
+        <!--
+
+		step = 0;
+
+		diff=3;
+
+		// mudar de placa quando o botão é clicado
+
+        function clear_all(form) {
+
+			step = 0;
+
+			for (i=0;i<9; ++i) {
+
+				position="a"+i;
+
+				form[position].value="";
+
+			}
+
+		}
+
+
+		//alterar a borda quando o botão é clicado
+
+        function clickit(field) {
+
+		if (step == -1) {alert("Reset e jogue novamente"); return;}
+
+        position=field.name.substring(1,2,1);
+
+        position = 'a'+position;
+
+		if (field.form[position].value !="") {alert("NÃo pode mover pra cá"); return;}
+
+        field.form[position].value="X";
+
+        if (eval_pos(field.form)) {
+
+			field.form.output.value="Você venceu!!";
+
+			step = -1;
+
+			return;
+
+		}
+
+        position=get_move(field.form);
+
+        field.form.output.value='I moved to ' + position.substring(1,2,1);
+
+		if (position=="") {
+
+			field.form.output.value="Não houve vencedor.";
+
+			step = -1;
+
+			return;
+
+		}
+
+        field.form[position].value="O";
+
+        if (eval_pos(field.form)) {
+
+			field.form.output.value="Você perdeu!";
+
+			step = -1;
+
+		}
+
+        }
+
+
+
+		//
+		//veja se há um vencedor
+        function eval_pos(form) {
+
+   		if ((form.a0.value!="" &&
+
+			form.a0.value==form.a3.value && form.a0.value==form.a6.value)||
+
+   		   (form.a0.value!=""
+
+			&& form.a0.value==form.a1.value && form.a0.value==form.a2.value) ||
+
+   		   (form.a0.value!=""
+
+			&& form.a0.value==form.a4.value && form.a0.value==form.a8.value) ||
+
+   		   (form.a1.value!=""
+
+			&& form.a1.value==form.a4.value && form.a1.value==form.a7.value) ||
+
+   		   (form.a2.value!=""
+
+			&& form.a2.value==form.a5.value && form.a2.value==form.a8.value) ||
+
+   		   (form.a2.value!=""
+
+			&& form.a2.value==form.a4.value && form.a2.value==form.a6.value) ||
+
+   		   (form.a3.value!=""
+
+			&& form.a3.value==form.a4.value && form.a3.value==form.a5.value) ||
+
+   		   (form.a6.value!=""
+
+			&& form.a6.value==form.a7.value && form.a6.value==form.a8.value))
+
+			return true;
+
+		else
+
+           return false;
+
+        }
+
+
+
+		function f(a) {
+
+		if (a == "") return "."; else return a;
+
+		}
+
+
+
+
+		//obter posição para mover.
+
+        function comp_move(form,player,weight,depth) {
+
+            var cost;
+
+			var bestcost=-2;
+
+			var position;
+
+			var newplayer;
+
+			if (player=="X") newplayer="O"; else newplayer="X";
+
+			if (depth==diff) return 0;
+
+			if (eval_pos(form)) return 1;
+
+			for (var i=0; i<9; ++i) {
+
+				position='a'+i;
+
+				if (form[position].value != "")
+
+					continue;
+
+				form[position].value=player;
+
+				cost = comp_move(form,newplayer, -weight, depth+1);
+
+				if (cost > bestcost) {
+
+					bestcost=cost;
+
+					if (cost==1) i=9;
+
+				}
+
+				form[position].value="";
+
+			}
+
+			if (bestcost==-2) bestcost=0;
+
+			return(-bestcost);
+
+		}
+
+
+
+		//
+		//obter posição para mover.
+
+        function get_move(form) {
+
+			var cost;
+
+			var bestcost=-2;
+
+			bestmove="";
+
+			// don't think about first move.
+
+			if (step++ == 0)
+
+				if (form.a4.value=="")
+
+					return "a4";
+
+				else
+
+				if (form.a0.value=="")
+
+					return "a0";
+
+
+
+			for (var i=0; i<9; ++i) {
+
+				localposition='a'+i;
+
+				if (form[localposition].value != "")
+
+					continue;
+
+				form[localposition].value="O";
+
+				cost=comp_move(form,"X", -1, 0);
+
+				if (cost > bestcost) {
+
+					if (cost==1) i=9;
+
+					bestmove=localposition;
+
+					bestcost=cost;
+
+				}
+
+				form[localposition].value="";
+
+			}
+
+			return bestmove;
+
+        }
+
+
+
+
+		//Reclamar se o usuário tentar mudar de placa
+
+        function complain(field) {
+
+			field.form.output.focus(); // put focus eleswhere
+
+			alert("Clique no botão");
+
+        }
+
+	//a href="https://github.com/dersonPI/jogo-da-velha.git
+
+        // fim -->
+
+      </script>
+
+
+<form>
+    <div align="center"><center><p><input type="text" size="1" name="a0" onfocus="complain(this)"> <input type="button" name="b0" onclick="clickit(this)"> <input type="text" size="1" name="a1" onfocus="complain(this)"> <input type="button" name="b1" onclick="clickit(this)"> <input type="text" size="1" name="a2" onfocus="complain(this)"> <input type="button" name="b2" onclick="clickit(this)"> <br>
+                <input type="text" size="1" name="a3" onfocus="complain(this)"> <input type="button" name="b3" onclick="clickit(this)"> <input type="text" size="1" name="a4" onfocus="complain(this)"> <input type="button" name="b4" onclick="clickit(this)"> <input type="text" size="1" name="a5" onfocus="complain(this)"> <input type="button" name="b5" onclick="clickit(this)"> <br>
+                <input type="text" size="1" name="a6" onfocus="complain(this)"> <input type="button" name="b6" onclick="clickit(this)"> <input type="text" size="1" name="a7" onfocus="complain(this)"> <input type="button" name="b7" onclick="clickit(this)"> <input type="text" size="1" name="a8" onfocus="complain(this)"> <input type="button" name="b8" onclick="clickit(this)"> <br>
+                <br>
+                <br>
+                <font size="3" face="Comic Sans MS, arial">Mensagem: <input type="text" size="20" name="output"><br>
+                    <br>
+                    N?vel de Dificuldade: <select name="difficulty" size="1" onchange="diff=form.difficulty[form.difficulty.selectedIndex].value;">
+                        <option value="1"> Muito Fácil </option>
+                        <option value="2"> Fácil </option>
+                        <option selected value="3"> Médio </option>
+                        <option value="4"> Difícil </option>
+                    </select> </font></p>
+        </center></div><div align="center"><center><p><font size="3" face="Comic Sans MS, arial"><input type="button" value="Computador Movendo Primeiro" onclick="
+
+		if (!step++) this.form.a4.value='O';"> </font></p>
+        </center></div><div align="center"><center><p><font size="3" face="Comic Sans MS, arial"><input type="reset" value="Reiniciar" onclick="clear_all(this.form)"> </font></p>
+        </center></div>
+</form>
+
+<p align="center">&nbsp;</p>
+
+</body>
+</html>
