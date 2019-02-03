@@ -72,7 +72,7 @@
 
         position=get_move(field.form);
 
-        field.form.output.value='I moved to ' + position.substring(1,2,1);
+        field.form.output.value='Mudou para ' + position.substring(1,2,1);
 
 		if (position=="") {
 
@@ -279,16 +279,16 @@
 
       </script>
 
-
+<div></div>
 <form>
-    <div align="center"><center><p><input type="text" size="1" name="a0" onfocus="complain(this)"> <input type="button" name="b0" onclick="clickit(this)"> <input type="text" size="1" name="a1" onfocus="complain(this)"> <input type="button" name="b1" onclick="clickit(this)"> <input type="text" size="1" name="a2" onfocus="complain(this)"> <input type="button" name="b2" onclick="clickit(this)"> <br>
+    <div align="center" class="container-center"><center><p><input type="text" size="1" name="a0" onfocus="complain(this)"> <input type="button" name="b0" onclick="clickit(this)"> <input type="text" size="1" name="a1" onfocus="complain(this)"> <input type="button" name="b1" onclick="clickit(this)"> <input type="text" size="1" name="a2" onfocus="complain(this)"> <input type="button" name="b2" onclick="clickit(this)"> <br>
                 <input type="text" size="1" name="a3" onfocus="complain(this)"> <input type="button" name="b3" onclick="clickit(this)"> <input type="text" size="1" name="a4" onfocus="complain(this)"> <input type="button" name="b4" onclick="clickit(this)"> <input type="text" size="1" name="a5" onfocus="complain(this)"> <input type="button" name="b5" onclick="clickit(this)"> <br>
                 <input type="text" size="1" name="a6" onfocus="complain(this)"> <input type="button" name="b6" onclick="clickit(this)"> <input type="text" size="1" name="a7" onfocus="complain(this)"> <input type="button" name="b7" onclick="clickit(this)"> <input type="text" size="1" name="a8" onfocus="complain(this)"> <input type="button" name="b8" onclick="clickit(this)"> <br>
                 <br>
                 <br>
                 <font size="3" face="Comic Sans MS, arial">Mensagem: <input type="text" size="20" name="output"><br>
                     <br>
-                    N?vel de Dificuldade: <select name="difficulty" size="1" onchange="diff=form.difficulty[form.difficulty.selectedIndex].value;">
+                    Nível de Dificuldade: <select name="difficulty" size="1" onchange="diff=form.difficulty[form.difficulty.selectedIndex].value;">
                         <option value="1"> Muito Fácil </option>
                         <option value="2"> Fácil </option>
                         <option selected value="3"> Médio </option>
